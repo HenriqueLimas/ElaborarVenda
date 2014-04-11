@@ -1,0 +1,51 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'karma-chromecanary-launcher' ]
+2 info using npm@1.4.6
+3 info using node@v0.10.26
+4 warn package.json elaborarvenda3@0.0.0 No description
+5 warn package.json elaborarvenda3@0.0.0 No repository field.
+6 warn package.json elaborarvenda3@0.0.0 No README data
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'karma-chromecanary-launcher', null ]
+9 verbose cache add name=undefined spec="karma-chromecanary-launcher" args=["karma-chromecanary-launcher",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'karma-chromecanary-launcher',
+10 verbose parsed url   path: 'karma-chromecanary-launcher',
+10 verbose parsed url   href: 'karma-chromecanary-launcher' }
+11 silly lockFile 63f106d6-karma-chromecanary-launcher karma-chromecanary-launcher
+12 verbose lock karma-chromecanary-launcher /Users/Henrique/.npm/63f106d6-karma-chromecanary-launcher.lock
+13 silly lockFile 63f106d6-karma-chromecanary-launcher karma-chromecanary-launcher
+14 silly lockFile 63f106d6-karma-chromecanary-launcher karma-chromecanary-launcher
+15 verbose addNamed [ 'karma-chromecanary-launcher', '' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile cb3a48be-karma-chromecanary-launcher karma-chromecanary-launcher@
+18 verbose lock karma-chromecanary-launcher@ /Users/Henrique/.npm/cb3a48be-karma-chromecanary-launcher.lock
+19 silly addNameRange { name: 'karma-chromecanary-launcher',
+19 silly addNameRange   range: '*',
+19 silly addNameRange   hasData: false }
+20 silly lockFile cb3a48be-karma-chromecanary-launcher karma-chromecanary-launcher@
+21 silly lockFile cb3a48be-karma-chromecanary-launcher karma-chromecanary-launcher@
+22 error 404 'karma-chromecanary-launcher' is not in the npm registry.
+22 error 404 You should bug the author to publish it
+22 error 404 It was specified as a dependency of 'elaborarvenda3'
+22 error 404
+22 error 404 Note that you can also install from a
+22 error 404 tarball, folder, or http url, or git url.
+23 error System Darwin 13.1.0
+24 error command "node" "/usr/local/bin/npm" "install" "karma-chromecanary-launcher"
+25 error cwd /Users/Henrique/Google Drive/Projeto Betha/Elaboraçao de uma Venda 2.0/elaborarVenda3
+26 error node -v v0.10.26
+27 error npm -v 1.4.6
+28 error code E404
+29 verbose exit [ 1, true ]

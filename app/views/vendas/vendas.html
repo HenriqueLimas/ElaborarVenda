@@ -1,0 +1,19 @@
+<div>
+	<h3>
+		<div ng-if="Cliente">Vendas - Cliente 1</div>
+		<div ng-if="!Cliente">Vendas</div>
+		<span class="badge">Total {{getValorTotalVendas() | currency}}</span>
+	</h3>
+	<div class="list-group" ng-repeat="venda in Vendas">
+		<a class="list-group-item" ng-click="isCollapsed = !isCollapsed">
+			<span class="badge">{{venda.valor | currency}}</span>
+			{{venda.nome}}
+		</a>
+		<div collapse="isCollapsed">
+			<ul ng-if="Itens" class="list-group" ng-repeat="itens in Itens">
+				<li class="list-group-item"></li>
+			</ul> 
+			<div ng-if="!Itens" class="well well-lg">Ainda não á produtos por aqui</div> 
+		</div>
+	</div>
+</div>
