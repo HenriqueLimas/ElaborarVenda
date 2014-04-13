@@ -2,12 +2,17 @@
 
 angular.module('elaborarVenda3App.clientes')
     .controller('ClientesController', function($scope) {
+
         $scope.initNewCliente = function() {
             $scope.newCliente = getModel();
         }
 
-        $scope.initNewCliente();
+        function init() {
+            $scope.initNewCliente();
+            $scope.selectCliente = getModel();
+        };
 
+        init();
         $scope.Clientes = [{
             id: 1,
             nome: 'Cliente 1',
@@ -35,6 +40,20 @@ angular.module('elaborarVenda3App.clientes')
 
             $scope.initNewCliente();
         };
+
+        $scope.editCliente = function(cliente) {
+            $scope.selectCliente = angular.copy(cliente);
+        }
+
+        $scope.removeCliente = function(id) {
+            angular.forEach($scope.Clientes, function(cliente) {
+                if (parseInt(cliente.id) === parseInt(id)) {
+                    var index = $scope.Clientes.indexOf(cliente);
+                    delete $scope.Clientes[index];
+                    $scope.Clientes.length -= 1;
+                }
+            });
+        }
 
         function getLink(id, cadastro) {
             return '#/clientes' + id + '/' + cadastro;

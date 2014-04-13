@@ -10,6 +10,7 @@ angular
         'ngSanitize',
         'ngRoute',
         'ui.bootstrap',
+        'pasvaz.bindonce',
         'restangular',
         'elaborarVenda3App.vendas',
         'elaborarVenda3App.clientes'
@@ -28,7 +29,7 @@ angular
                 templateUrl: 'views/vendas/vendas.html',
                 controller: 'VendasController'
             })
-            .when('clientes/:id/vendas', {
+            .when('/clientes/:id/vendas', {
                 templateUrl: 'views/vendas/vendas.html',
                 controller: 'VendasController'
             })

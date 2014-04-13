@@ -1,19 +1,53 @@
 <div>
 	<h3>
-		<div ng-if="Cliente">Vendas - Cliente 1</div>
-		<div ng-if="!Cliente">Vendas</div>
-		<span class="badge">Total {{getValorTotalVendas() | currency}}</span>
+		<div ng-if="Cliente.nome">Vendas - {{Cliente.nome}}</div>
+		<div ng-if="!Cliente.nome">Vendas</div>		
 	</h3>
-	<div class="list-group" ng-repeat="venda in Vendas">
-		<a class="list-group-item" ng-click="isCollapsed = !isCollapsed">
-			<span class="badge">{{venda.valor | currency}}</span>
-			{{venda.nome}}
-		</a>
-		<div collapse="isCollapsed">
-			<ul ng-if="Itens" class="list-group" ng-repeat="itens in Itens">
-				<li class="list-group-item"></li>
-			</ul> 
-			<div ng-if="!Itens" class="well well-lg">Ainda não á produtos por aqui</div> 
+	<div bindonce ng-repeat="cliente in Clientes">
+		<span style="float:right" class="badge">Total {{getValorTotalVendas() | currency}}</span>
+		<button class="btn btn-success" data-toggle="modal" data-target="#newVenda">+ Venda</button>
+		<!-- Modal New Venda -->
+		<div class="modal fade" id="newVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">Nova Venda</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="input-group">
+		      		<span class="input-group-addon">
+		      			<span class="glyphicon glyphicon-info-sign"></span>
+		      		</span>
+		        	<input class="form-control" placeholder="Nome" type="text" ng-model="newVenda.nome" />
+		        </div>		       
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" ng-click="addVenda()" data-dismiss="modal">Adicionar</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
+		<hr>
+		<div bondonce ng-repeat="venda in Vendas">
+			<a class="list-group-item" ng-click="isCollapsed = !isCollapsed">
+				<span class="badge">{{getValorTotalVenda(venda) | currency}}</span>
+				{{venda.nome}}
+			</a>
+			<div collapse="isCollapsed">
+
+				<div ng-if="existeItens(venda.id)" class="well well-lg">
+					<strong>Produtos:</strong>
+					<div bindonce ng-repeat="item in Itens | filter: {vendasId: venda.id}">
+						<div class="list-group-item">{{item}}</div>				
+					</div>
+				</div> 
+				<div ng-if="!existeItens(venda.id)" class="well well-lg">
+					Ainda não á produtos por aqui				
+				</div> 
+			</div>
+		</div>
+		<hr>
 	</div>
 </div>

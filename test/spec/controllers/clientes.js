@@ -41,6 +41,16 @@ describe('Controller: Clientes', function() {
         expect($scope.Clientes[0].nome).toBeDefined();
         expect($scope.Clientes[0].links.vendas).toBeDefined();
     });
+
+    describe('on selecting a client', function() {
+        it('should exist the client to be update', function() {
+            $scope.editCliente(clienteModel[0]);
+            expect($scope.selectCliente).toBeDefined();
+            expect($scope.selectCliente).toEqual(clienteModel[0]);
+
+        });
+
+    });
     describe('adding new client', function() {
         it('should add a new client', function() {
             var oldLength = $scope.Clientes.length;
@@ -67,4 +77,12 @@ describe('Controller: Clientes', function() {
         });
     });
 
+    describe('on deleting', function() {
+        it('should delete the client by id', function() {
+            var oldLength = $scope.Clientes.length;
+            $scope.removeCliente(1);
+            $scope.$digest();
+            expect($scope.Clientes.length).toBe(oldLength - 1);
+        });
+    });
 });
