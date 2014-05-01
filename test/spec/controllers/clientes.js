@@ -6,11 +6,31 @@ describe('Controller: Clientes', function() {
     beforeEach(module('elaborarVenda3App.clientes'));
 
     var ClientesController,
+        ClientesService,
         $scope,
         clienteModel;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function($controller, $rootScope) {
+        ClientesService = {
+            getAll: function() {
+                return clienteModel;
+            },
+            get: function() {
+                return clienteModel[0];
+            },
+            add: function(newCliente) {
+                return $scope.Clientes.push(newCliente);
+            },
+            update: function() {
+                return;
+            },
+            remove: function() {
+                delete $scope.Clientes[0];
+                $scope.Clientes.length--;
+            }
+        };
+
         clienteModel = [{
             id: 1,
             nome: 'Cliente 1',
@@ -28,9 +48,9 @@ describe('Controller: Clientes', function() {
         $scope = $rootScope.$new();
         $scope.Clientes = clienteModel;
         ClientesController = $controller('ClientesController', {
-            $scope: $scope
+            $scope: $scope,
+            ClientesService: ClientesService
         });
-
 
     }));
 

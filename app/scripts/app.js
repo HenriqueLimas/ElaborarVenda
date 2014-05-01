@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('elaborarVenda3App.vendas', []);
-angular.module('elaborarVenda3App.clientes', []);
+angular.module('elaborarVenda3App.clientes', ['restangular']);
+angular.module('elaborarVenda3App.itens', ['restangular']);
+angular.module('elaborarVenda3App.vendas', ['restangular', 'elaborarVenda3App.clientes', 'elaborarVenda3App.itens']);
 
 angular
     .module('elaborarVenda3App', [
@@ -13,6 +14,7 @@ angular
         'pasvaz.bindonce',
         'restangular',
         'elaborarVenda3App.vendas',
+        'elaborarVenda3App.itens',
         'elaborarVenda3App.clientes'
     ])
     .config(function($routeProvider) {

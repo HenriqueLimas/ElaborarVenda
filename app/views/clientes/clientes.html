@@ -1,64 +1,73 @@
 <div>
-	<h3>Clientes</h3>
+    <h3>Clientes
+        <!-- Button trigger modal -->
+        <button ng-click="initNewCliente()" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCliente">
+            + Cliente
+        </button>
+    </h3>
 
-	<!-- Button trigger modal -->
-	<button ng-click="initNewCliente()" class="btn btn-primary" data-toggle="modal" data-target="#newCliente">
-	  + Cliente
-	</button>
-	<!-- Modal New Cliente -->
-	<div class="modal fade" id="newCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h4 class="modal-title" id="myModalLabel">Novo Cliente</h4>
-	      </div>
-	      <div class="modal-body">
-	      	<div class="input-group">
-	      		<span class="input-group-addon">
-	      			<span class="glyphicon glyphicon-user"></span>
-	      		</span>
-	        	<input class="form-control" placeholder="Nome" type="text" ng-model="newCliente.nome" />
-	        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary" ng-click="addCliente()" data-dismiss="modal">Adicionar</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 
-	<hr>
 
-	<div class="list-group" bindonce ng-repeat="cliente in Clientes">
-		<button ng-click="editCliente(cliente)" style="float:left;margin-right:10px; width: 80%;text-align:left" bo-href="cliente.links.vendas" class="list-group-item" data-toggle="modal" data-target="#editCliente">
-			<div bo-text="cliente.nome"></div>
-		</button>	
-		<!-- Modal Edit Cliente -->
-		<div class="modal fade" id="editCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title" id="myModalLabel" ng-bind="selectCliente.nome"></h4>
-		      </div>
-		      <div class="modal-body">
-		      	<div class="input-group">
-		      		<span class="input-group-addon">
-		      			<span class="glyphicon glyphicon-user"></span>
-		      		</span>
-		        	<input class="form-control" placeholder="Nome" type="text" ng-model="selectCliente.nome" />
-		        </div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		<a ng-href="#/clientes/{{cliente.id}}/vendas"class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></a></button>	
-	</div>
+    <!-- Modal New Cliente -->
+    <div class="modal fade" id="newCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Novo Cliente</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+                        <input class="form-control" placeholder="Nome" type="text" ng-model="newCliente.nome" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="addCliente()" data-dismiss="modal">Adicionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="list-group" bindonce ng-repeat="cliente in Clientes">
+        <button ng-click="editCliente(cliente)" style="float:left;margin-right:10px; width: 80%;text-align:left" bo-href="cliente.links.vendas" class="list-group-item" data-toggle="modal" data-target="#editCliente">
+            <div bo-text="cliente.nome | capitalLetter"></div>
+        </button>
+        <!-- Modal Edit Cliente -->
+        <div class="modal fade" id="editCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel" ng-bind="selectCliente.nome"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-user"></span>
+                            </span>
+                            <input class="form-control" placeholder="Nome" type="text" ng-model="selectCliente.nome" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a ng-href="#/clientes/{{cliente.id}}/vendas" class="btn btn-success" title="Vendas">
+            <span class="glyphicon glyphicon-shopping-cart">
+        </a>
+        <button ng-click="removeCliente(cliente.id)" class="btn btn-danger">
+            Remove
+        </button>
+
+    </div>
 
 </div>
