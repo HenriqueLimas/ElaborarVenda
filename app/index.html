@@ -2,8 +2,11 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -17,53 +20,67 @@
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="elaborarVenda3App" style="background-color: #e9eacd;">
+</head>
+
+<body ng-app="elaborarVenda3App" style="background-color: #e9eacd;">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <div class="container">
-      <div class="header">
-          <nav class="navbar navbar-inverse" role="navigation">
-              <div class="container-fluid">
-                  <div class="navbar-header">
-                      <a href="/#" class="navbar-brand">Elaboracao de Venda</a>
-                  </div>
-                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
-                      <ul class="nav navbar-nav">
-                          <li onclick="setActive(this)"><a href="#/clientes">Clientes</a>
-                          </li>
-                          <li onclick="setActive(this)"><a href="#/vendas">Vendas</a>
-                          </li>
-                      </ul>                      
-                  </div>
-              </div>
-          </nav>
-      </div>
-      <div ng-view=""></div>
+        <div class="header">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="/#" class="navbar-brand">Elaboracao de Venda</a>
+                    </div>
+                    <div class="collapse navbar-collapse collapse" id="bs-example-navbar-collapse-9">
+                        <ul class="nav navbar-nav">
+                            <li onclick="setActive(this)"><a href="#/clientes">Clientes</a>
+                            </li>
+                            <li onclick="setActive(this)"><a href="#/vendas">Vendas</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div ng-view=""></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
     </script>
 
     <script type="text/javascript">
-        function setActive(node){
-          var parent = node.parentNode;
-          for(var i = 0;i < parent.childNodes.length; i++){
+    function setActive(node) {
+        var parent = node.parentNode;
+        for (var i = 0; i < parent.childNodes.length; i++) {
             parent.childNodes[i].className = '';
-          }
-          node.className = 'active';
         }
+        node.className = 'active';
+    }
     </script>
 
     <!--[if lt IE 9]>
@@ -87,14 +104,15 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>        
-        <script src="scripts/controllers/clientes.js"></script>
-        <script src="scripts/controllers/vendas.js"></script>
-        <script src="scripts/services/clientes.js"></script>
-        <script src="scripts/services/vendas.js"></script>
-        <script src="scripts/services/itens.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/clientes.js"></script>
+    <script src="scripts/controllers/vendas.js"></script>
+    <script src="scripts/services/clientes.js"></script>
+    <script src="scripts/services/vendas.js"></script>
+    <script src="scripts/services/itens.js"></script>
+    <!-- endbuild -->
 </body>
+
 </html>

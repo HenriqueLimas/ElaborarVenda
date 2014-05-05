@@ -31,8 +31,6 @@ var Vendas = [{
     }
 }];
 
-var vendasCliente;
-
 function getVenda(vendaId) {
     return _.find(Vendas, function(venda) {
         return parseInt(venda.id) === parseInt(vendaId);
@@ -44,6 +42,7 @@ exports.getAllVendas = function(req, res) {
 };
 
 exports.getAllVendasCliente = function(req, res) {
+    var vendasCliente;
     vendasCliente = _.filter(Vendas, function(venda) {
         return parseInt(venda.clienteId) === parseInt(req.params.clienteId);
     });
@@ -57,10 +56,6 @@ exports.getVenda = function(req, res) {
 };
 
 exports.addVenda = function(req, res) {
-    if (vendasCliente) {
-        vendasCliente.push(req.body);
-    }
-
     Vendas.push(req.body);
 
     res.send();
@@ -68,50 +63,29 @@ exports.addVenda = function(req, res) {
 
 exports.updateVenda = function(req, res) {
     var indexVenda,
-        indexVendaCliente,
-        achou = false;
+        venda;
 
-    if (vendasCliente) {
-        indexVendaCliente = 0;
-        //Consulta o index da venda do cliente a ser excluida no vetor
-        for (var venda in vendasCliente) {
-            if (venda.vendaId === req.params.vendaId) {
-                achou = true;
-                break;
-            }
-            indexVendaCliente++;
-        }
-        if (achou) {
-            indexVenda = 0;
-            achou = false;
-            //consulta o index da venda geral a ser excluida
-            for (venda in Vendas) {
-                if (venda === vendasCliente[indexVendaCliente]) {
-                    achou = true;
-                    break;
-                }
-                indexVenda++;
-            }
-            vendasCliente[indexVendaCliente] = req.body;
-            Vendas[indexVenda] = req.body;
-        }
+    venda = _.find(Vendas, function(data) {
+        return parseInt(data.clienteId) === parseInt(req.params.clienteId) && parseInt(data.id) === parseInt(req.params.vendaId);
+    })
+
+    indexVenda = _.indexOf(Vendas, venda);
+
+    if (indexVenda >= 0) {
+        console.log(req.body);
+        Vendas[indexVenda] = req.body;
     }
     res.send();
 };
 
 exports.removeAll = function(req, res) {
     Vendas = [];
-    vendasCliente = [];
-    res.send(Vendas);
+    res.send();
 };
 
 exports.removeVenda = function(req, res) {
-    vendasCliente = _.reject(vendasCliente, function(venda) {
-        return venda.id === req.params.vendaId;
-    });
-
     Vendas = _.reject(Vendas, function(venda) {
-        return venda.id === req.params.vendaId;
+        return parseInt(venda.clienteId) === parseInt(req.params.clienteId) && parseInt(venda.id) === parseInt(req.params.vendaId);
     });
 
     res.send();

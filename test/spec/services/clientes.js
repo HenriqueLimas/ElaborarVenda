@@ -55,6 +55,7 @@ describe('Service: Clientes', function() {
         $httpBackend.whenGET('/clientes/1').respond(200, cliente);
         $httpBackend.whenPOST('/clientes').respond(201, newCliente);
         $httpBackend.whenPUT('/clientes?0=%7B%22id%22:1,%22nome%22:%22Cliente+1%22,%22links%22:%7B%22vendas%22:%22%23%2Fclientes%2F1%2Fvendas%22%7D%7D').respond(200, cliente);
+        $httpBackend.whenPUT('/clientes').respond(200, cliente);
         $httpBackend.whenDELETE('/clientes').respond();
         $httpBackend.whenDELETE('/clientes/1').respond();
     }));

@@ -19,7 +19,7 @@ angular.module('elaborarVenda3App.vendas')
                     return Restangular.one('clientes', newVenda.clienteId).all('vendas').post(newVenda);
                 },
                 update: function(venda) {
-                    return Restangular.one('clientes', venda.clienteId).one('vendas', venda.id).put(venda);
+                    return Restangular.one('clientes', venda.clienteId).one('vendas', venda.id).customPUT(venda);
                 },
                 remove: function(venda) {
                     return Restangular.one('clientes', venda.clienteId).one('vendas', venda.id).remove();

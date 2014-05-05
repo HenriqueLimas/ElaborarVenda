@@ -15,11 +15,11 @@ angular.module('elaborarVenda3App.vendas')
         };
     })
     .filter('filterItemVenda', function() {
-        return function(itens, vendaId) {
+        return function(itens, clienteId, vendaId) {
             var result = [];
 
             angular.forEach(itens, function(item) {
-                if (parseInt(item.vendaId) === parseInt(vendaId)) {
+                if (parseInt(item.clienteId) === parseInt(clienteId) && parseInt(item.vendaId) === parseInt(vendaId)) {
                     result.push(item);
                 }
             });
@@ -65,25 +65,36 @@ angular.module('elaborarVenda3App.vendas')
                 $scope.newVenda.clienteId = clienteId;
             }
 
+            function initNewItem(venda) {
+                $scope.newItem = getItemModel();
+                $scope.newItem.clienteId = venda.clienteId;
+                $scope.newItem.vendaId = venda.id;
+            }
+
             $scope.initNewVenda = function(clienteId) {
                 initNewVenda(clienteId);
+            };
+
+            $scope.initNewItem = function(venda) {
+                initNewItem(venda);
             };
 
             $scope.getValorTotalVendas = function(clienteId) {
                 var valTot = 0;
                 angular.forEach($scope.Vendas, function(venda) {
                     if (parseInt(venda.clienteId) === parseInt(clienteId)) {
-                        valTot += venda.valor;
+                        valTot += (venda.valor) * 1;
                     }
                 });
+
                 return valTot;
             };
 
             $scope.getValorTotalVenda = function(venda) {
                 var valTot = 0;
                 angular.forEach($scope.Itens, function(item) {
-                    if (parseInt(item.vendaId) === parseInt(venda.id)) {
-                        valTot += item.valorUnitario;
+                    if (parseInt(item.clienteId) === parseInt(venda.clienteId) && parseInt(item.vendaId) === parseInt(venda.id)) {
+                        valTot += (item.valorUnitario) * 1;
                     }
                 });
                 venda.valor = valTot;
@@ -100,6 +111,61 @@ angular.module('elaborarVenda3App.vendas')
                 $scope.Vendas.push($scope.newVenda);
             };
 
+            $scope.removeVenda = function(venda) {
+                $scope.removeItensVendas(venda);
+                $scope.Vendas = _.reject($scope.Vendas, function(data) {
+                    return parseInt(data.id) === parseInt(venda.id);
+                });
+                VendasService.remove(venda);
+            };
+
+            $scope.removeItensVendas = function(venda) {
+                $scope.Itens = _.reject($scope.Itens, function(item) {
+                    return parseInt(item.vendaId) === parseInt(venda.id);
+                });
+
+                ItensService.removeAllItemVendas(venda);
+            };
+
+            $scope.removeItem = function(item) {
+                $scope.Itens = _.reject($scope.Itens, function(data) {
+                    return parseInt(data.id) === parseInt(item.id);
+                });
+
+                ItensService.removeItem(item);
+            };
+
+            $scope.addItem = function() {
+                var newId = $scope.Itens.length;
+                if ($scope.newItem.produto.trim() === '') {
+                    return;
+                }
+                $scope.newItem.id = newId;
+                ItensService.add($scope.newItem);
+                $scope.Itens.push($scope.newItem);
+            };
+
+            $scope.editVenda = function(venda, event) {
+                $scope.selectVenda = angular.copy(venda);
+                $('#editVenda').modal('show')
+            };
+
+            $scope.saveEdit = function() {
+                var oldVenda,
+                    index;
+                VendasService.update($scope.selectVenda);
+
+                oldVenda = _.find($scope.Vendas, function(data) {
+                    return parseInt(data.clienteId) === parseInt($scope.selectVenda.clienteId) && parseInt(data.id) === parseInt($scope.selectVenda.id);
+                });
+
+                index = _.indexOf($scope.Vendas, oldVenda);
+
+                if (index >= 0) {
+                    $scope.Vendas[index] = $scope.selectVenda;
+                }
+            };
+
             $scope.existeVendas = function(id) {
                 var existe = false;
                 angular.forEach($scope.Vendas, function(venda) {
@@ -112,10 +178,10 @@ angular.module('elaborarVenda3App.vendas')
                 return existe;
             };
 
-            $scope.existeItens = function(id) {
+            $scope.existeItens = function(venda) {
                 var existe = false;
                 angular.forEach($scope.Itens, function(item) {
-                    if (parseInt(item.vendaId) === parseInt(id)) {
+                    if (parseInt(item.clienteId) === parseInt(venda.clienteId) && parseInt(item.vendaId) === parseInt(venda.id)) {
                         existe = true;
                         return;
                     }
@@ -134,6 +200,17 @@ angular.module('elaborarVenda3App.vendas')
                     link: {
                         itens: null
                     }
+                };
+            }
+
+            function getItemModel() {
+                return {
+                    id: null,
+                    clienteId: null,
+                    vendaId: null,
+                    produto: null,
+                    quantidade: null,
+                    valorUnitario: null
                 };
             }
 

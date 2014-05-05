@@ -48,23 +48,16 @@ exports.addCliente = function(req, res) {
 };
 
 exports.updateCliente = function(req, res) {
-    var indexCliente,
-        achou = false;
+    var cliente, index;
 
-    for (indexCliente = 0; indexCliente < Clientes.length; indexCliente++) {
-        if (parseInt(Clientes[indexCliente].clienteId) === parseInt(req.params.clienteId)) {
-            achou = true;
-            break;
-        }
-    }
-    if (achou) {
-        console.log(req.body);
-        if (req.body) {
-            Clientes[indexCliente] = req.body;
-        }
-        Clientes.sort(function(cliente1, cliente2) {
-            return cliente1.clienteId - cliente2.clienteId;
-        });
+    cliente = _.find(Clientes, function(cliente) {
+        return parseInt(cliente.id) === parseInt(req.params.clienteId);
+    })
+
+    index = _.indexOf(Clientes, cliente);
+
+    if (index >= 0) {
+        Clientes[index] = req.body;
     }
     res.send();
 };

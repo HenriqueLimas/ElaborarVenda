@@ -4,28 +4,28 @@ var _ = require('lodash');
 
 var Itens = [{
     id: 1,
-    clienteId: 0,
+    clienteId: 1,
     vendaId: 1,
     produto: 'primeiroProdtuo',
     quantidade: 5,
     valorUnitario: 3.3
 }, {
     id: 2,
-    clienteId: 0,
+    clienteId: 1,
     vendaId: 1,
     produto: 'segundoProdtuo',
     quantidade: 4,
     valorUnitario: 3.3
 }, {
     id: 3,
-    clienteId: 0,
+    clienteId: 1,
     vendaId: 2,
     produto: 'terceiroProdtuo',
     quantidade: 5,
     valorUnitario: 3.3
 }, {
     id: 4,
-    clienteId: 0,
+    clienteId: 1,
     vendaId: 2,
     produto: 'quartoProdtuo',
     quantidade: 4,
@@ -75,14 +75,16 @@ exports.updateItem = function(req, res) {
     res.send();
 };
 
-exports.removeAll = function(req, res) {
-    Itens = [];
-    res.send(200, Itens);
+exports.removeAllItemVenda = function(req, res) {
+    Itens = _.reject(Itens, function(item) {
+        return parseInt(item.vendaId) === parseInt(req.params.vendaId);
+    });
+    res.send();
 };
 
 exports.removeItem = function(req, res) {
     Itens = _.reject(Itens, function(item) {
-        return item.id === req.params.itensId;
+        return parseInt(item.id) === parseInt(req.params.itensId);
     });
 
     res.send();

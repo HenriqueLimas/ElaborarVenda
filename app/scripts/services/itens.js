@@ -17,8 +17,11 @@ angular.module('elaborarVenda3App.itens')
                 update: function(item) {
                     return Restangular.one('clientes', item.clienteId).one('vendas', item.vendaId).one('itens', item.id).put(item);
                 },
-                remove: function(item) {
+                removeItem: function(item) {
                     return Restangular.one('clientes', item.clienteId).one('vendas', item.vendaId).one('itens', item.id).remove();
+                },
+                removeAllItemVendas: function(venda) {
+                    return Restangular.one('clientes', venda.clienteId).one('vendas', venda.id).all('itens').remove();
                 }
             };
         }

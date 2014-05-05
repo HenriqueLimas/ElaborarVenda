@@ -34,6 +34,22 @@ angular.module('elaborarVenda3App.clientes')
                 $scope.selectCliente = angular.copy(cliente);
             };
 
+            $scope.saveEdit = function() {
+                var oldCliente,
+                    index;
+                ClientesService.update($scope.selectCliente);
+
+                oldCliente = _.find($scope.Clientes, function(cliente) {
+                    return parseInt(cliente.id) === parseInt($scope.selectCliente.id);
+                });
+
+                index = _.indexOf($scope.Clientes, oldCliente);
+
+                if (index >= 0) {
+                    $scope.Clientes[index] = $scope.selectCliente;
+                }
+            };
+
             $scope.removeCliente = function(id) {
                 angular.forEach($scope.Clientes, function(cliente) {
                     if (parseInt(cliente.id) === parseInt(id)) {

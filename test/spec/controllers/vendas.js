@@ -54,21 +54,27 @@ describe('Controller: VendasController', function() {
             getAll: function() {
                 return [{
                     vendaId: 1,
+                    clienteId: 1,
                     valorUnitario: 10
                 }, {
                     vendaId: 1,
+                    clienteId: 1,
                     valorUnitario: 30
                 }, {
                     vendaId: 1,
+                    clienteId: 1,
                     valorUnitario: 20
                 }, {
                     vendaId: 1,
+                    clienteId: 1,
                     valorUnitario: 10
                 }, {
                     vendaId: 2,
+                    clienteId: 1,
                     valorUnitario: 10
                 }, {
                     vendaId: 3,
+                    clienteId: 1,
                     valorUnitario: 10
                 }];
             }
@@ -89,7 +95,10 @@ describe('Controller: VendasController', function() {
 
     describe('Find item', function() {
         it('should find sales\'s itens', function() {
-            expect($scope.existeItens(1)).toBeTruthy();
+            expect($scope.existeItens({
+                id: 1,
+                clienteId: 1
+            })).toBeTruthy();
         });
     });
 

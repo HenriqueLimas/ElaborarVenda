@@ -53,7 +53,7 @@ app.get('/clientes/:clienteId/vendas/:vendaId/itens/:itensId', itens.getItem);
 app.post('/clientes/:clienteId/vendas/:vendasId/itens', itens.addItens);
 app.post('/clientes/:clienteId/vendas/:vendaId/itens/:itensId', itens.updateItem);
 app.put('/clientes/:clienteId/vendas/:vendaId/itens/:itensId', itens.updateItem);
-app.delete('/clientes/:clienteId/vendas/:vendaId/itens', itens.removeAll);
+app.delete('/clientes/:clienteId/vendas/:vendaId/itens', itens.removeAllItemVenda);
 app.delete('/clientes/:clienteId/vendas/:vendaId/itens/:itensId', itens.removeItem);
 
 /// catch 404 and forwarding to error handler

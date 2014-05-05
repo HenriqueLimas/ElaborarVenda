@@ -1,36 +1,18 @@
 <div>
     <h3>Vendas</h3>
     <hr>
-    <div bindonce ng-repeat="cliente in Clientes">
-        <div style="padding:15px;;background-color: #eee;border-radius: 4px;">
+    <div class="input-group">
+        <span class="input-group-addon">Pesquisar</span>
+        <input ng-model="search.value" class="form-control"/>
+    </div>
+    <hr>
+    <div bindonce ng-repeat="cliente in Clientes | filter:search.value">
+        <div style="padding:15px;background-color: #eee;border-radius: 4px;">
             <h4>{{cliente.nome | capitalLetter}}
                 <button data-ng-click="initNewVenda(cliente.id);" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newVenda">+ Venda</button>
             </h4>
             <span style="float:right; margin-top: -4%;" class="badge">Total {{getValorTotalVendas(cliente.id) | currency}}</span>
 
-        </div>
-        <!-- Modal New Venda -->
-        <div class="modal fade" id="newVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Nova Venda</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-info-sign"></span>
-                            </span>
-                            <input class="form-control" placeholder="Nome" type="text" ng-model="newVenda.nome" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="addVenda()" data-dismiss="modal">Adicionar</button>
-                    </div>
-                </div>
-            </div>
         </div>
         <div ng-if="!existeVendas(cliente.id)" class="well well-lg">
             Ainda não á vendas por aqui
@@ -39,25 +21,169 @@
             <a class="list-group-item" ng-click="isCollapsed = !isCollapsed">
                 <span class="badge">{{getValorTotalVenda(venda) | currency}}</span>
                 {{venda.nome}}
+                <button data-ng-click="removeVenda(venda);" class="btn btn-danger btn-xs" style="float: right; margin-right: 20px;">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <button data-ng-click="$event.stopPropagation();editVenda(venda);" data-toggle="modal" data-target="#editVenda" onclick="event.initEvent();" class="btn btn-primary btn-xs" style="float: right; margin-right: 5px;">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </button>
             </a>
             <div collapse="isCollapsed">
-                <div ng-if="existeItens(venda.id)" class="well">
-                    <strong>Produtos:</strong>
-                    <table class="table table-striped">
-                        <thead></thead>
+                <div ng-if="existeItens(venda)" class="well">
+                    <table class="table table-striped" style="margin-top: 10px;">
+                        <thead>
+                            <th>
+                                <div>
+                                    <strong>Produto</strong>
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <strong>Valor</strong>
+                                </div>
+                            </th>
+                        </thead>
                         <tbody>
-                            <tr ng-repeat="item in Itens | filterItemVenda: venda.id">
-                                <td>{{item.produto}}</td>
+                            <tr ng-repeat="item in Itens | filterItemVenda:cliente.id:venda.id">
+                                <td>
+                                    {{item.produto}}
+                                </td>
+                                <td>
+                                    {{item.valorUnitario | currency}}
+                                    <button data-ng-click="removeItem(item);" class="btn btn-danger btn-xs" style="float: right; margin-right: 20px;">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button data-ng-click="initNewItem(venda)" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newItem">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </td>
+                                <td></td>
+
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div ng-if="!existeItens(venda.id)" class="well well-lg">
-                    Ainda não á produtos por aqui
+                <div ng-if="!existeItens(venda)" class="well well-lg">
+                    <div>Ainda não á produtos por aqui</div>
+                    <button data-ng-click="initNewItem(venda)" class="btn btn-success btn-xs" data-toggle="modal" data-target="#newItem">+ Item</button>
+
                 </div>
             </div>
         </div>
-        <hr>        
+        <hr>
+    </div>
+
+    <!-- Modal New Venda -->
+    <div class="modal fade" id="newVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Nova Venda</h4>
+                </div>
+                <form name="newVendaForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                        </span>
+                                        <input class="form-control" placeholder="Nome" type="text" ng-model="newVenda.nome" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button ng-disabled="!newVendaForm.$valid" type="button" class="btn btn-primary" ng-click="addVenda()" data-dismiss="modal">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Venda -->
+    <div class="modal fade" id="editVenda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Editar Venda</h4>
+                </div>
+                <form name="newVendaForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                        </span>
+                                        <input class="form-control" placeholder="Nome" type="text" ng-model="selectVenda.nome" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button ng-disabled="!newVendaForm.$valid" type="button" class="btn btn-primary" ng-click="saveEdit()" data-dismiss="modal">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal New Item -->
+    <div class="modal fade" id="newItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Novo Item</h4>
+                </div>
+                <form name="newItemForm">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                        </span>
+                                        <input class="form-control" placeholder="Nome" type="text" ng-model="newItem.produto" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-xs-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-usd"></span>
+                                        </span>
+                                        <input ng-model="newItem.valorUnitario" class="form-control" placeholder="0.00" type="text" required/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button ng-disabled="!newItemForm.$valid" class="btn btn-primary" ng-click="addItem()" data-dismiss="modal">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 </div>

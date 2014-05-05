@@ -15,7 +15,7 @@ angular.module('elaborarVenda3App.clientes')
                     return Restangular.all('clientes').post(newCliente);
                 },
                 update: function(cliente) {
-                    return Restangular.one('clientes', cliente.id).put(cliente);
+                    return Restangular.one('clientes', cliente.id).customPUT(cliente);
                 },
                 remove: function(id) {
                     return Restangular.one('clientes', id).remove();
