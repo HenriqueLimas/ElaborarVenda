@@ -1,23 +1,25 @@
 <div>
-    <h3>Clientes <button ng-click="initNewCliente()" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCliente">+ Cliente</button></h3>
-    <hr>
-    <div class="input-group">
-        <span class="input-group-addon">Pesquisar</span>
-        <input ng-model="search.value" class="form-control"/>
-    </div>
+    <h3 style="text-align:center">Clientes
+        <button ng-click="initNewCliente()" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#newCliente">+ Cliente</button>
+    </h3>
     <hr>    
-    <div class="list-group" bindonce ng-repeat="cliente in Clientes">
-        <button ng-click="editCliente(cliente)" style="float:left;margin-right:10px; width: 80%;text-align:left" bo-href="cliente.links.vendas" class="list-group-item" data-toggle="modal" data-target="#editCliente">
-            <div bo-text="cliente.nome | capitalLetter"></div>
-        </button>
-        <a ng-href="#/clientes/{{cliente.id}}/vendas" class="btn btn-success" title="Vendas" style="margin-top: 4px">
-            <span class="glyphicon glyphicon-tag"></span>
-        </a>
-        <button ng-click="removeCliente(cliente.id)" class="btn btn-danger" style="margin-top: 4px">
-            <span class="glyphicon glyphicon-trash"></span>
-        </button>
+    <div>
+        <div class="list-group" bindonce ng-repeat="cliente in Clientes">
+            <div ng-click="editCliente(cliente)" style="float:left;margin: 0.5%; width: 48%;height:100px; text-align:center" class="list-group-item" data-toggle="modal" data-target="#editCliente">
+                <h5 class="list-group-item-heading" style="height: 17px; margin-bottom: 5px; overflow: hidden;">{{cliente.nome.slice(0,16) | capitalLetter}}
+                    <span ng-if="cliente.nome.length > 18">...</span>
+                </h5>
+                <div class="list-group-item-text" style="margin-top: 5%">
+                    <a ng-href="#/clientes/{{cliente.id}}/vendas" class="btn btn-success btn-sm" title="Vendas" style="margin-top: 4px">
+                        <span class="glyphicon glyphicon-tag"></span> Vendas
+                    </a>
+                    <button ng-click="$event.stopPropagation();removeCliente(cliente.id)" class="btn btn-danger btn-sm" style="margin-top: 4px;display: inline-block;">
+                        <span class="glyphicon glyphicon-trash"></span> Excluir
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-
 
     <!-- Modal Edit Cliente -->
     <div class="modal fade" id="editCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -26,7 +28,8 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">Alterar Cliente</h4>
-                </div><form name="editClienteForm">
+                </div>
+                <form name="editClienteForm">
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group">
@@ -35,7 +38,7 @@
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-info-sign"></span>
                                         </span>
-                                        <input class="form-control" placeholder="Nome" type="text" ng-model="selectCliente.nome" required/>
+                                        <input class="form-control" placeholder="Nome" type="text" ng-model="selectCliente.nome" maxlength="19" required/>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +77,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button ng-disabled="!newClienteForm.$valid" type="button" class="btn btn-primary" ng-click="addCliente()" data-dismiss="modal">Adicionar</button>
+                        <button ng-disabled="!newClienteForm.$valid" data-ng-click="addCliente();" type="button" class="btn btn-primary" data-dismiss="modal">Adicionar</button>
                     </div>
                 </form>
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('elaborarVenda3App.clientes', ['restangular']);
+angular.module('elaborarVenda3App.clientes', ['restangular', 'ui.sortable']);
 angular.module('elaborarVenda3App.itens', ['restangular']);
 angular.module('elaborarVenda3App.vendas', ['restangular', 'elaborarVenda3App.clientes', 'elaborarVenda3App.itens']);
 
@@ -19,10 +19,6 @@ angular
     ])
     .config(function($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
-            })
             .when('/clientes', {
                 templateUrl: 'views/clientes/clientes.html',
                 controller: 'ClientesController'
@@ -36,6 +32,6 @@ angular
                 controller: 'VendasController'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/clientes'
             });
     });
