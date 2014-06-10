@@ -1,0 +1,26 @@
+<snippet>
+	<content><![CDATA[
+	/**
+	 * Controller
+	 */
+	describe('${1:Controller}Ctrl', function() {
+		var \$scope;
+			
+		beforeEach(module('${2:Modulo}'));
+
+		beforeEach(inject(function(\$injector) {
+			\$scope = \$bfUtil.getNewScope();
+
+			\$bfUtil.initController('${1:Controller}Ctrl', {
+				\$scope: \$scope
+			});
+		}));
+
+		${3://Start your test here}
+	});
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>unitTestController</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
