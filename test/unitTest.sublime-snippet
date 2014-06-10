@@ -1,0 +1,52 @@
+<snippet>
+    <content><![CDATA[
+'use strict';
+
+describe('${1:Descricao}', function(){
+	/**
+	 * Serviço
+	 */
+	describe('${2:Nome da Service}Service', function(){
+		var \$httpBackend,
+			${3:Nome}Service;
+		beforeEach(module('${4:Nome do modulo}', 'restangular'));
+
+		beforeEach(inject(function(\$injector){
+			\$httpBackend = \$injector.get('\$httpBackend');
+			${3:Nome}Service = \$injector.get('${2:Nome da Service}Service');
+
+		}));
+
+		afterEach(function() {
+			$httpBackend.verifyNoOutstandingExpectation();
+			$httpBackend.verifyNoOutstandingRequest();
+		});
+
+		${5://Start your test here}
+	});
+
+	/**
+	 * Controller
+	 */
+	describe('${6:Controller}Ctrl', function() {
+		var \$scope;
+			
+		beforeEach(module('${7:Modulo}'));
+
+		beforeEach(inject(function(\$injector) {
+			\$scope = \$bfUtil.getNewScope();
+
+			\$bfUtil.initController('${6:Controller}Ctrl', {
+				\$scope: \$scope
+			});
+		}));
+
+		${8://Start your test here}
+	});
+});
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>unitTest</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <!-- <scope>source.javascript</scope> -->
+</snippet>
