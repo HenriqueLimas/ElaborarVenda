@@ -75,7 +75,7 @@
 	 * Objeto utilizado como utilitário nos testes
 	 * @type {Object}
 	 */
-	window.$bfUtil = {
+	window.$hrUnitUtil = {
 		getPromise: getPromise,
 		voidFunction: voidFunction,
 		getNewScope: getNewScope,
