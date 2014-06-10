@@ -1,0 +1,29 @@
+<snippet>
+	<content><![CDATA[
+	/**
+	 * Serviço
+	 */
+	describe('${1:Nome da Service}Service', function(){
+		var \$httpBackend,
+			${2:Nome}Service;
+		beforeEach(module('${3:Nome do modulo}', 'restangular'));
+
+		beforeEach(inject(function(\$injector){
+			\$httpBackend = \$injector.get('\$httpBackend');
+			${2:Nome}Service = \$injector.get('${1:Nome da Service}Service');
+
+		}));
+
+		afterEach(function() {
+			$httpBackend.verifyNoOutstandingExpectation();
+			$httpBackend.verifyNoOutstandingRequest();
+		});
+
+		${4://Start your test here}
+	});
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>unitTestService</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
